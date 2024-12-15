@@ -1,10 +1,12 @@
 "use client"
+import { useRouter } from 'next/navigation';
 import React from 'react'
 
 export default function LoginPage() {
 
     const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
+    const router   = useRouter();
 
 
     const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -22,6 +24,8 @@ export default function LoginPage() {
             const data = await response.json();
 
             console.log(data);
+            localStorage.setItem("accessToken", data.accessToken);
+            router.push('/home');
         } catch (error) {
             console.error(error);
         }
