@@ -1,41 +1,39 @@
-"use client"
-import { useRouter } from 'next/navigation';
-import React from 'react'
+"use client";
+import { useRouter } from "next/navigation";
+import React from "react";
 
 export default function LoginPage() {
+  const [username, setUsername] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const router = useRouter();
 
-    const [username, setUsername] = React.useState('');
-    const [password, setPassword] = React.useState('');
-    const router   = useRouter();
+  const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
 
+    try {
+      const response = await fetch("https://dummyjson.com/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, password }),
+      });
 
-    const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
+      const data = await response.json();
 
-        try {
-            const response = await fetch('https://dummyjson.com/auth/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ username, password }),
-            });
-
-            const data = await response.json();
-
-            console.log(data);
-            localStorage.setItem("accessToken", data.accessToken);
-            router.push('/home');
-        } catch (error) {
-            console.error(error);
-        }
+      console.log(data);
+      localStorage.setItem("accessToken", data.accessToken);
+      router.push("/home");
+    } catch (error) {
+      console.error(error);
     }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white shadow-md rounded-lg p-8 w-full max-w-md">
         <h2 className="text-2xl font-bold text-center mb-6">Login</h2>
-        <form method='post'  onSubmit={handleLogin}>
+        <form method="post" onSubmit={handleLogin}>
           {/* Email Input */}
           <div className="mb-4">
             <label

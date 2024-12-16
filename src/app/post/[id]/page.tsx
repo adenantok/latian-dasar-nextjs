@@ -1,11 +1,15 @@
-import React from 'react'
-import PostPage from '../_components/PostPage'
 
+import React from "react";
+import PostPage from "../_components/PostPage";
+import Navbar from "@/components/Navbar";
 
-
-export default async function Page({params}: {params: {id: number}}) {
-  const {id} = await params
-  return (
-    <PostPage id={id} />
+// eslint-disable-next-line @next/next/no-async-client-component
+export default async  function Page({ params }: { params: { id: number } }) {
+  const { id } = await params;
+  return(
+    <>
+    <Navbar />
+    <PostPage id={id} />;
+    </>
   )
 }
