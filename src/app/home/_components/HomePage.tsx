@@ -1,5 +1,7 @@
 "use client"
 import React, { useEffect, useState } from 'react'
+//import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 interface Post {
     id: number;
@@ -8,8 +10,12 @@ interface Post {
 }
 export default function HomePage() {
     const [postData, setPostData] = useState<Post[]>([]);
+   // const router = useRouter();
     //const accessToken = localStorage.getItem("accessToken");
-
+    // const handleComment = (id: number) => {
+    //     console.log(id);
+    //     router.push(`/post/${id}`);
+    // }
     
         const fetchPosts = async () => {
             try {
@@ -39,6 +45,7 @@ export default function HomePage() {
                         <th className="px-4 py-2">ID</th>
                         <th className="px-4 py-2">Title</th>
                         <th className="px-4 py-2">Body</th>
+                        <th className='px-4 py-2'>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -47,6 +54,11 @@ export default function HomePage() {
                             <td className="border px-4 py-2">{id}</td>
                             <td className="border px-4 py-2">{title}</td>
                             <td className="border px-4 py-2">{body}</td>
+                            <td className="border px-4 py-2">
+                                <Link href={`/post/${id}`}>
+                                    <div className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Comment</div>
+                                </Link>
+                            </td>
                         </tr>
                     ))}
                 </tbody>
